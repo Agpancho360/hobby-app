@@ -66,5 +66,16 @@
             android:textColor="#00b4d8"
             android:textAlignment="center"
             android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/input_signup"
+            android:layout_marginTop="10dp"
+            android:textSize="11dp"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="New User? Sign Up"
+            android:textColor="#00b4d8"
+            android:textAlignment="center"
+            android:textStyle="bold"/>
     </LinearLayout>
 </LinearLayout>
