@@ -9,7 +9,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.geocamera1"
+        applicationId = "com.example.hobbyapp"
         minSdk = 34
         targetSdk = 34
         versionCode = 1

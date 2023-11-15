@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
         loginBtn.setOnClickListener {
-//            //check if email exist in database
+            //check if email exist in database
 //            val emailText = email.text.toString()
 //            val passwordText = password.text.toString()
 //            val (userExists, userId) = loginViewModel.checkUserExistsByEmailAndPassword(emailText,passwordText)
