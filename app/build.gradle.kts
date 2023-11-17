@@ -65,6 +65,8 @@ dependencies {
     androidTestImplementation("androidx.arch.core:core-testing:2.2.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
 
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3") // Use the latest version
+
 //    //OpenStreetMap Components
 //    implementation("org.osmdroid:osmdroid-android:6.1.14")
 //    //Google Play Location Service Component

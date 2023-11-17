@@ -33,7 +33,7 @@ class UserRepository(private val userDao: UserDao) {
     }
     @Suppress("RedudndantSuspendModifier")
     @WorkerThread
-    fun checkUserByEmailAndPassword(email: String, password:String): User {
+    suspend fun checkUserByEmailAndPassword(email: String, password: String): User? {
         return userDao.getUserByEmailAndPassword(email, password)
     }
 }

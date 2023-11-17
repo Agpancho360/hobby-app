@@ -17,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.example.hobbyapp.CreateUserActivity.CreateUserActivity
 import com.example.hobbyapp.R
 import com.example.hobbyapp.Util.UserApplication
@@ -30,6 +31,8 @@ class LoginActivity : AppCompatActivity() {
     private val loginViewModel: LoginViewModel by viewModels {
         LoginViewModel.LoginViewModelFactory((application as UserApplication).repository)
     }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_layout)
@@ -41,33 +44,23 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, CreateUserActivity::class.java)
             startActivity(intent)
         }
-        loginBtn.setOnClickListener {
-            //check if email exist in database
-//            val emailText = email.text.toString()
-//            val passwordText = password.text.toString()
-//            val (userExists, userId) = loginViewModel.checkUserExistsByEmailAndPassword(emailText,passwordText)
-//            if (userExists) {
-//                // 'userId' contains the ID of the user
-//                Log.d(
-//                    "LoginActivity",
-//                    "User exists (ID) -->  $userId"
-//                )
-//            } else {
-//                // User with the specified email does not exist in the database
-//                Log.d(
-//                    "LoginActivity",
-//                    "User does not exist"
-//                )
-//            }
-              Log.d(
-                    "LoginActivity",
-                    "LoginAcivity:  User was logged in"
-                )
-            //Create new landing page intent HERE
 
+        loginViewModel.loginResult.observe(this) { user ->
+            if (user != null) {
+                // User successfully logged in, handle the success
+                Log.d("LoginActivity", "User logged in successfully: User ID --> ${user.id}")
+                // Create and start the landing page intent here
+            } else {
+                // Login failed, handle the failure
+                Log.d("LoginActivity", "Login failed: User not found")
+            }
         }
 
-
+        loginBtn.setOnClickListener {
+            //check if email exist in database
+            val emailText = email.text.toString()
+            val passwordText = password.text.toString()
+            loginViewModel.checkUserExistsByEmailAndPassword(emailText, passwordText)
+        }
     }
-
 }
