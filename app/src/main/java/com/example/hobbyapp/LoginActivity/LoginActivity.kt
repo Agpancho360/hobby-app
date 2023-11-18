@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.example.hobbyapp.CreateUserActivity.CreateUserActivity
+import com.example.hobbyapp.HomeActivity.HomeActivity
 import com.example.hobbyapp.R
 import com.example.hobbyapp.Util.UserApplication
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -36,31 +37,39 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_layout)
+
+        //initializes variables
         signupBtn = findViewById(R.id.input_signup)
         loginBtn = findViewById(R.id.input_submit)
         email = findViewById(R.id.input_email)
         password = findViewById(R.id.input_password)
+        //onclick listener to create new user
         signupBtn.setOnClickListener {
             val intent = Intent(this, CreateUserActivity::class.java)
             startActivity(intent)
         }
 
-        loginViewModel.loginResult.observe(this) { user ->
-            if (user != null) {
-                // User successfully logged in, handle the success
-                Log.d("LoginActivity", "User logged in successfully: User ID --> ${user.id}")
-                // Create and start the landing page intent here
-            } else {
-                // Login failed, handle the failure
-                Log.d("LoginActivity", "Login failed: User not found")
-            }
-        }
-
+        //onclick listener to login in
         loginBtn.setOnClickListener {
             //check if email exist in database
             val emailText = email.text.toString()
             val passwordText = password.text.toString()
             loginViewModel.checkUserExistsByEmailAndPassword(emailText, passwordText)
+        }
+
+        //checks if user exists in data based on email/password
+        loginViewModel.loginResult.observe(this) { user ->
+            // User successfully logged in, handle the success
+            if (user != null) {
+                Log.d("LoginActivity", "User logged in successfully: User ID --> ${user.id}")
+                //Goes to HomeActivity if successful
+                val intent = Intent(this, HomeActivity::class.java)
+                intent.putExtra("USER_ID", user.id) //sends user id to HomeActivity
+                startActivity(intent)
+            } else {
+                // Login failed, handle the failure
+                Log.d("LoginActivity", "Login failed: User not found")
+            }
         }
     }
 }

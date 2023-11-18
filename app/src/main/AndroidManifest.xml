@@ -26,6 +26,10 @@
             android:name=".CreateUserActivity.CreateUserActivity"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".HomeActivity.HomeActivity"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>
