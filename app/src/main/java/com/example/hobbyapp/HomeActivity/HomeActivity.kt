@@ -21,7 +21,7 @@ class HomeActivity : AppCompatActivity() {
     private val homeViewModel: HomeViewModel by viewModels {
         HomeViewModel.HomeViewModelFactory((application as UserApplication).repository)
     }
-
+    //random comment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_layout)
