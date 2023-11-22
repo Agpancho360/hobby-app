@@ -60,7 +60,7 @@ abstract class UserRoomDatabase : RoomDatabase() {
             // Delete all content here.
             userDao.deleteAll()
             // Add sample users
-            val user= User(null,"John","Doe","johndoe@example.com","password")
+            val user= User(null,"","John","Doe","johndoe@example.com","password")
             userDao.insert(user)
 
         }
