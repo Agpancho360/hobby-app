@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 class UserRepository(private val userDao: UserDao) {
 
     //sets up database
-    val allUsers: Flow<Map<Int,User>> = userDao.getUsers()
+    val allUsers: Flow<List<User>> = userDao.getUsers()
 
     @Suppress("RedudndantSuspendModifier")
     @WorkerThread
@@ -36,4 +36,5 @@ class UserRepository(private val userDao: UserDao) {
     suspend fun checkUserByEmailAndPassword(email: String, password: String): User? {
         return userDao.getUserByEmailAndPassword(email, password)
     }
+
 }

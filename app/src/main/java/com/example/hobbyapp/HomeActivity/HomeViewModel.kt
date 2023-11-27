@@ -7,16 +7,9 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: UserRepository): ViewModel() {
 
-    val _user = MutableLiveData<User>().apply { value=null }
-    val user:LiveData<User>
-        get() = _user
-    fun start(userId:Int){
-        viewModelScope.launch {
-            repository.allUsers.collect{
-                _user.value = it[userId]
-            }
-        }
-    }
+    //val _user = MutableLiveData<User>().apply { value=null }
+    val allUsers: LiveData<List<User>> = repository.allUsers.asLiveData()
+
     fun updateUser(user: User) {
         viewModelScope.launch {
             repository.updateUser(user)
