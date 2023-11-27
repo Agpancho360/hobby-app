@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(private val repository: UserRepository): ViewModel() {
 
-    val allUsers: LiveData<Map<Int, User>> = repository.allUsers.asLiveData()
+    val allUsers: LiveData<List<User>> = repository.allUsers.asLiveData()
 
     // LiveData to observe login results
     private val login = MutableLiveData<User?>()

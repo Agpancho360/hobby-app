@@ -6,10 +6,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserDao {
 
-    @MapInfo(keyColumn="id")
     //Will return all users in database
     @Query("SELECT * FROM users_table order by id ASC")
-    fun getUsers(): Flow<Map<Int,User>>
+    fun getUsers(): Flow<List<User>>
 
     //inserts a user to Database
     @Insert(onConflict = OnConflictStrategy.IGNORE)

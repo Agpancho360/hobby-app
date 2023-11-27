@@ -38,7 +38,7 @@ import kotlin.math.roundToInt
 
 class CreateUserActivity : AppCompatActivity() {
     private lateinit var user: User
-    private lateinit var image: ImageView
+    private lateinit var imageView: ImageView
     private lateinit var fname: EditText
     private lateinit var lname: EditText
     private lateinit var email: EditText
@@ -60,7 +60,7 @@ class CreateUserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.create_user_layout)
-        image = findViewById(R.id.picture)
+        imageView = findViewById(R.id.picture)
         fname = findViewById(R.id.fname)
         lname = findViewById(R.id.lname)
         email = findViewById(R.id.email)
@@ -87,7 +87,7 @@ class CreateUserActivity : AppCompatActivity() {
             setResult(RESULT_OK)
             finish()
         }
-        image.setOnClickListener{
+        imageView.setOnClickListener{
             takeAPicture()
         }
     }
@@ -106,7 +106,7 @@ class CreateUserActivity : AppCompatActivity() {
     }
     //Following functions deal with take Photo and setting it
     private fun setPic() {
-        val targetSize: Int = minOf(image.width, image.height)
+        val targetSize: Int = minOf(imageView.width, imageView.height)
 
         // Get the dimensions of the bitmap
         val bmOptions = BitmapFactory.Options()
@@ -139,7 +139,7 @@ class CreateUserActivity : AppCompatActivity() {
         val circularBitmap = getCircularBitmap(originalBitmap)
 
         // Set the circular bitmap to the ImageView
-        image.setImageBitmap(circularBitmap)
+        imageView.setImageBitmap(circularBitmap)
     }
 
     private fun getCircularBitmap(bitmap: Bitmap): Bitmap {
@@ -165,6 +165,7 @@ class CreateUserActivity : AppCompatActivity() {
             val filepath: String = createFilePath()
             val myFile: File = File(filepath)
             currentPhotoPath = filepath
+            user.image = currentPhotoPath  // Update user.image with the file path
             val photoUri =
                 FileProvider.getUriForFile(this, "com.example.hobbyapp.fileprovider", myFile)
             picIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
