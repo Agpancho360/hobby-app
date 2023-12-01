@@ -24,8 +24,8 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.hobbyapp.R
 import com.example.hobbyapp.UserDatabase.User
+import com.example.hobbyapp.UserDatabase.UserViewModel
 import com.example.hobbyapp.Util.UserApplication
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -33,7 +33,6 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlin.math.roundToInt
 
 
 class CreateUserActivity : AppCompatActivity() {
@@ -45,8 +44,8 @@ class CreateUserActivity : AppCompatActivity() {
     private lateinit var password: EditText
     private var currentPhotoPath: String = ""
     private var id:Int = -1
-    private val createUserViewModel:CreateUserViewModel by viewModels {
-        CreateUserViewModel.CreateUserViewModelFactory((application as UserApplication).repository)
+    private val userViewModel: UserViewModel by viewModels {
+        UserViewModel.UserViewModelFactory((application as UserApplication).repository)
     }
     private val takePictureResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result: ActivityResult ->
@@ -61,8 +60,8 @@ class CreateUserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.create_user_layout)
         imageView = findViewById(R.id.picture)
-        fname = findViewById(R.id.fname)
-        lname = findViewById(R.id.lname)
+        fname = findViewById(R.id.first_name)
+        lname = findViewById(R.id.last_name)
         email = findViewById(R.id.email)
         password = findViewById(R.id.password)
         if (id == -1)
@@ -78,7 +77,7 @@ class CreateUserActivity : AppCompatActivity() {
             user.password = password.text.toString()
             //insert new Photo object
             if(user.id==null){
-                createUserViewModel.insert(user)
+                userViewModel.insert(user)
                 Log.d(
                     "CreateUserActivity",
                     "User Object is ${user}"

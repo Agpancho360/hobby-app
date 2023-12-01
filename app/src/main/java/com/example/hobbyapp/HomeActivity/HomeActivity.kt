@@ -15,6 +15,7 @@ import androidx.lifecycle.LiveData
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.hobbyapp.UserDatabase.UserRepository
+import com.example.hobbyapp.UserDatabase.UserViewModel
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var user: User
@@ -22,8 +23,8 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var settingsBtn: FloatingActionButton
     private var id: Int = -1
     private lateinit var viewPager: ViewPager2
-    private val homeViewModel: HomeViewModel by viewModels {
-        HomeViewModel.HomeViewModelFactory((application as UserApplication).repository)
+    private val userViewModel: UserViewModel by viewModels {
+        UserViewModel.UserViewModelFactory((application as UserApplication).repository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +61,7 @@ class HomeActivity : AppCompatActivity() {
 
 
     private fun loadUsers() {
-        homeViewModel.allUsers.observe(this) { userList ->
+        userViewModel.allUsers.observe(this) { userList ->
             // Find the user with the specified ID
             val currentUser = userList.find { it.id == id }
 

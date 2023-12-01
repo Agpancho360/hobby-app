@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">hobbyApp</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="create_header">LETS GET STARTED</string>
+    <string name="create_image_description">Profile Picture</string>
+    <string name="create_sign_up">SIGN UP</string>
+    <string name="create_login_in">LOGIN</string>
+    <string name="new_user">New User? Sign Up</string>
+    <string name="login_image_description">Logo Picture</string>
 </resources>
