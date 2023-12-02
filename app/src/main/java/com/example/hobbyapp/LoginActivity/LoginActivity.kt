@@ -55,11 +55,21 @@ class LoginActivity : AppCompatActivity() {
                 //Goes to HomeActivity if successful
                 val intent = Intent(this, HomeActivity::class.java)
                 intent.putExtra("USER_ID", user.id) //sends user id to HomeActivity
+
+
                 startActivity(intent)
             } else {
                 // Login failed, handle the failure
                 Log.d("LoginActivity", "Login failed: User not found")
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        email.setText("")
+        password.setText("")
+        email.clearFocus()
+        password.clearFocus()
     }
 }

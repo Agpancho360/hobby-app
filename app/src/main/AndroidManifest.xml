@@ -36,6 +36,10 @@
             android:name=".HomeActivity.HomeActivity"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".CreateUserActivity.HobbiesActivity"
+            android:exported="false">
+        </activity>
         <!--used to hold image files-->
         <provider
             android:name="androidx.core.content.FileProvider"

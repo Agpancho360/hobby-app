@@ -38,6 +38,7 @@ class ScreenSlidePageFragment : Fragment() {
 
         val userPicture: ImageView = view.findViewById(R.id.user_picture)
         val userName: TextView = view.findViewById(R.id.user_name)
+        val hobbies: TextView = view.findViewById(R.id.hobbies)
 
         // Set user information to UI elements
         userName.text = "${user.fname} ${user.lname}"
@@ -52,7 +53,19 @@ class ScreenSlidePageFragment : Fragment() {
             Log.d("ScreenSlidePageFragment", "File does not exist at path: $currentPhotoPath")
             userPicture.setImageDrawable(null)
         }
+
+        // Get selected hobbies and set the TextView
+        val selectedHobbies = getSelectedHobbies()
+        if (selectedHobbies.isNotEmpty()) {
+            val maxDisplayedHobbies = 3
+            val displayedHobbies = selectedHobbies.take(maxDisplayedHobbies)
+            val hobbiesText = "Hobbies: ${displayedHobbies.joinToString(", ")}${if (selectedHobbies.size > maxDisplayedHobbies) "..." else ""}"
+            hobbies.text = hobbiesText
+        } else {
+            hobbies.text = "No hobbies selected"
+        }
     }
+
 
     private fun getRoundedCornerBitmap(filePath: String): Bitmap {
         val options = BitmapFactory.Options()
@@ -84,6 +97,22 @@ class ScreenSlidePageFragment : Fragment() {
 
     fun setUser(user: User) {
         this.user = user
+    }
+    private fun getSelectedHobbies(): List<String> {
+        val selectedHobbiesList = mutableListOf<String>()
+
+        if (user.swimming) selectedHobbiesList.add("Swimming")
+        if (user.drawing) selectedHobbiesList.add("Drawing")
+        if (user.gardening) selectedHobbiesList.add("Gardening")
+        if (user.coding) selectedHobbiesList.add("Coding")
+        if (user.traveling) selectedHobbiesList.add("Traveling")
+        if (user.photography) selectedHobbiesList.add("Photography")
+        if (user.painting) selectedHobbiesList.add("Painting")
+        if (user.music) selectedHobbiesList.add("Music")
+        if (user.writing) selectedHobbiesList.add("Writing")
+        if (user.running) selectedHobbiesList.add("Running")
+        if (user.cooking) selectedHobbiesList.add("Cooking")
+        return selectedHobbiesList
     }
 }
 

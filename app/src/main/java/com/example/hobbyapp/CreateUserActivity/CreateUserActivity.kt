@@ -18,17 +18,9 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import androidx.lifecycle.lifecycleScope
 import com.example.hobbyapp.R
-import com.example.hobbyapp.UserDatabase.User
-import com.example.hobbyapp.UserDatabase.UserViewModel
-import com.example.hobbyapp.Util.UserApplication
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -36,17 +28,12 @@ import java.util.Locale
 
 
 class CreateUserActivity : AppCompatActivity() {
-    private lateinit var user: User
     private lateinit var imageView: ImageView
     private lateinit var fname: EditText
     private lateinit var lname: EditText
     private lateinit var email: EditText
     private lateinit var password: EditText
     private var currentPhotoPath: String = ""
-    private var id:Int = -1
-    private val userViewModel: UserViewModel by viewModels {
-        UserViewModel.UserViewModelFactory((application as UserApplication).repository)
-    }
     private val takePictureResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result: ActivityResult ->
         if(result.resultCode == Activity.RESULT_CANCELED){
@@ -64,43 +51,20 @@ class CreateUserActivity : AppCompatActivity() {
         lname = findViewById(R.id.last_name)
         email = findViewById(R.id.email)
         password = findViewById(R.id.password)
-        if (id == -1)
-        {
-            user = User(null,"","","","","")
-        }
         //On clickListener for when "Save" button is clicked
         findViewById<Button>(R.id.button).setOnClickListener{
-            Log.d("PhotoActivity","Save Clicked")
-            user.fname = fname.text.toString()
-            user.lname = lname.text.toString()
-            user.email = email.text.toString()
-            user.password = password.text.toString()
-            //insert new Photo object
-            if(user.id==null){
-                userViewModel.insert(user)
-                Log.d(
-                    "CreateUserActivity",
-                    "User Object is ${user}"
-                )
-            }
-            setResult(RESULT_OK)
-            finish()
+            Log.d("PhotoActivity","Next Clicked")
+            val intent = Intent(this, HobbiesActivity::class.java)
+            intent.putExtra("first_name", fname.text.toString())
+            intent.putExtra("last_name", lname.text.toString())
+            intent.putExtra("email", email.text.toString())
+            intent.putExtra("password", password.text.toString())
+            intent.putExtra("currentPhotoPath", currentPhotoPath)
+            startActivity(intent)
+
         }
         imageView.setOnClickListener{
             takeAPicture()
-        }
-    }
-    override fun onResume() {
-        super.onResume()
-        if(id != -1){
-            lifecycleScope.launch {
-                withContext(Dispatchers.IO) {
-                    Thread.sleep(200)
-                    withContext(Dispatchers.Main){
-
-                    }
-                }
-            }
         }
     }
     //Following functions deal with take Photo and setting it
@@ -164,7 +128,6 @@ class CreateUserActivity : AppCompatActivity() {
             val filepath: String = createFilePath()
             val myFile: File = File(filepath)
             currentPhotoPath = filepath
-            user.image = currentPhotoPath  // Update user.image with the file path
             val photoUri =
                 FileProvider.getUriForFile(this, "com.example.hobbyapp.fileprovider", myFile)
             picIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)

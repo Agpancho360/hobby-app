@@ -55,6 +55,7 @@ class HomeActivity : AppCompatActivity() {
 
         settingsBtn.setOnClickListener {
             Log.d("HomeActivity", "Going to SettingsActivity")
+            finish()
         }
     }
 
